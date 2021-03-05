@@ -1,0 +1,37 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30320.27
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TwitterSampleStreamAPI", "TwitterSampleStream\TwitterSampleStreamAPI.csproj", "{7BAD8A68-BEE9-4706-8A54-FDD178382F5C}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TwitterLibrary", "TwitterLibrary\TwitterLibrary.csproj", "{B904A36A-941F-48B8-82A5-CE3A507C4DAC}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TwitterDataBase", "PortableTwitterClasses\TwitterDataBase.csproj", "{25B97BD2-4F92-4730-9FBB-8832ADC88A30}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{7BAD8A68-BEE9-4706-8A54-FDD178382F5C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7BAD8A68-BEE9-4706-8A54-FDD178382F5C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7BAD8A68-BEE9-4706-8A54-FDD178382F5C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7BAD8A68-BEE9-4706-8A54-FDD178382F5C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B904A36A-941F-48B8-82A5-CE3A507C4DAC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B904A36A-941F-48B8-82A5-CE3A507C4DAC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B904A36A-941F-48B8-82A5-CE3A507C4DAC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B904A36A-941F-48B8-82A5-CE3A507C4DAC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{25B97BD2-4F92-4730-9FBB-8832ADC88A30}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{25B97BD2-4F92-4730-9FBB-8832ADC88A30}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{25B97BD2-4F92-4730-9FBB-8832ADC88A30}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{25B97BD2-4F92-4730-9FBB-8832ADC88A30}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {792ADF7C-445F-47DE-8AB4-01B96657E832}
+	EndGlobalSection
+EndGlobal
