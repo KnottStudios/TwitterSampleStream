@@ -94,5 +94,11 @@ namespace TwitterSampleStreamAPI.Controllers
             return new List<TwitterStatistic>();
         }
 
+        [Route("[action]")]
+        [HttpGet]
+        public async Task<string> GetTime() {
+            return MyTestTimer.GetTime();
+        }
+
     }
 }
