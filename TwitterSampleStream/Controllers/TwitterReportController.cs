@@ -1,6 +1,9 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using TwitterDataBase;
+using TwitterSampleStreamAPI.Managers;
 using TwitterSampleStreamAPI.Models;
 
 namespace TwitterSampleStreamAPI.Controllers
@@ -9,9 +12,10 @@ namespace TwitterSampleStreamAPI.Controllers
     [ApiController]
     public class TwitterReportController : ControllerBase
     {
-        public TwitterReportController()
+        ITweetManager Manager { get; set; }
+        public TwitterReportController(ITweetManager manager)
         {
-
+            Manager = manager;
         }
         /// <summary>
         /// Gets the Total Number of Tweets received while app has been running.
@@ -19,86 +23,30 @@ namespace TwitterSampleStreamAPI.Controllers
         /// <returns></returns>
         [Route("[action]")]
         [HttpGet]
-        public async Task<int> GetTotalNumberOfTweets() {
-            return 0;
+        public async Task<long> GetTotalNumberOfTweets() {
+            return await Manager.GetTotalTweets();
         }
         /// <summary>
         /// Gets the average number of tweets while app has been running.  Defaults to Minute.
+        /// Each Time level Rounds Up to the nearest whole number.  
         /// </summary>
         /// <param name="TimeName">Hour, Minute, or Second</param>
         /// <returns></returns>
         [Route("[action]")]
         [HttpGet]
-        public async Task<int> GetAverageTweets(TimeEnum TimeName = TimeEnum.Minute) {
-            return 0;
+        public async Task<decimal> GetAverageTweets(TimeEnum TimeName = TimeEnum.Minute) {
+            return await Manager.GetAverageTweets(TimeName);
         }
         /// <summary>
-        /// Gets the Top recent Emojis.
+        /// Gets the trending hashtags over a set period of time.  
         /// </summary>
-        /// <param name="TimeName">Hour, Minute, or Second, defaults To Minute</param>
-        /// <param name="NumberOfTopEmojis">Defaults to 1.</param>
+        /// <param name="StartTime">Defaults to an Hour ago</param>
+        /// <param name="NumberofTopHashtags">Defaults to 1.</param>
         /// <returns></returns>
         [Route("[action]")]
         [HttpGet]
-        public async Task<IEnumerable<TwitterStatistic>> GetTrendingEmojis(TimeEnum TimeName = TimeEnum.Minute, int NumberOfTopEmojis = 1) {
-            return new List<TwitterStatistic>();
+        public async Task<IEnumerable<Hashtag>> GetTrendingHashtags(DateTime? StartTime = null, int NumberofTopHashtags = 1) {
+            return await Manager.GetTrendingHashtags(StartTime ?? DateTime.Now.AddHours(-1), NumberofTopHashtags); 
         }
-        /// <summary>
-        /// Gets the percentage of tweets with emojis while app has been running.
-        /// </summary>
-        /// <returns></returns>
-        [Route("[action]")]
-        [HttpGet]
-        public async Task<decimal> GetPercentOfTweetsWithEmojis()
-        {
-            return 100;
-        }
-        /// <summary>
-        /// Gets the trending hashtags over a set period of time.
-        /// </summary>
-        /// <param name="TimeName">Hour, Minute, or Second, defaults To Minute</param>
-        /// <param name="NumberOfTopEmojis">Defaults to 1.</param>
-        /// <returns></returns>
-        [Route("[action]")]
-        [HttpGet]
-        public async Task<IEnumerable<TwitterStatistic>> GetTrendingHashtags(TimeEnum TimeName = TimeEnum.Minute, int NumberofTopHashtags = 1) {
-            return new List<TwitterStatistic>();
-        }
-        /// <summary>
-        /// Gets the Percent of Tweets with a URL while app has been running.  
-        /// </summary>
-        /// <returns></returns>
-        [Route("[action]")]
-        [HttpGet]
-        public async Task<decimal> GetPercentOfTweetsWithURL() {
-            return 100;
-        }
-        /// <summary>
-        /// Gets the Percent of Tweets with a PhotoURL while app has been running.
-        /// </summary>
-        /// <returns></returns>
-        [Route("[action]")]
-        [HttpGet]
-        public async Task<decimal> GetPercentOfTweetsWithPhotoUrl() {
-            return 100;
-        }
-        /// <summary>
-        /// Gets the Top Domains over a set period of time.
-        /// </summary>
-        /// <param name="TimeName">Hour, Minute, or Second, defaults To Minute</param>
-        /// <param name="NumberOfTopDomains">Defaults to 1.</param>
-        /// <returns></returns>
-        [Route("[action]")]
-        [HttpGet]
-        public async Task<IEnumerable<TwitterStatistic>> GetTrendingDomains(TimeEnum TimeName = TimeEnum.Minute, int NumberofTopDomains = 1) {
-            return new List<TwitterStatistic>();
-        }
-
-        [Route("[action]")]
-        [HttpGet]
-        public async Task<string> GetTime() {
-            return MyTestTimer.GetTime();
-        }
-
     }
 }

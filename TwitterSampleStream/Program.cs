@@ -1,22 +1,40 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Timers;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
-using TwitterSampleStreamAPI;
+using System;
+using System.Threading;
+using System.Threading.Tasks;
+using TwitterDataBase;
+using TwitterLibrary;
 
-namespace TwitterSampleStream
+namespace TwitterSampleStreamAPI
 {
     public class Program
     {
         public static async Task Main(string[] args)
         {
-            MyTestTimer.InitiateTimer();
-            CreateHostBuilder(args).Build().Run();
+            ITwitterLogger twitterLogger;
+            ITwitterDataHandler dataHandler;
+            ITwitterEngine twitterEngine;
+            var host = CreateHostBuilder(args).Build();
+            using (var serviceScope = host.Services.CreateScope())
+            {
+                var services = serviceScope.ServiceProvider;
+                dataHandler = services.GetRequiredService<ITwitterDataHandler>();
+                twitterEngine = services.GetRequiredService<ITwitterEngine>();
+                twitterLogger = services.GetRequiredService<ITwitterLogger>();
+            }
+            try
+            {
+                Thread Th = new Thread(new ThreadStart(() => twitterEngine.StartSampleStream(dataHandler.HandleTweet)));
+                Th.Start();
+                CreateHostBuilder(args).Build().Run();
+            }
+            catch (Exception ex) {
+                twitterLogger.Log(ex.Message, ex);
+            }
+
         }
 
         public static IHostBuilder CreateHostBuilder(string[] args) =>
@@ -25,7 +43,5 @@ namespace TwitterSampleStream
                 {
                     webBuilder.UseStartup<Startup>();
                 });
-
-
     }
 }

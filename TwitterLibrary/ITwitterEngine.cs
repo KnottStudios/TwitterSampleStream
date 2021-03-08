@@ -1,13 +1,15 @@
 ﻿using System;
+using System.Threading.Tasks;
+using Tweetinvi.Events;
 
 namespace TwitterLibrary
 {
     public interface ITwitterEngine
     {
-        public void StartSampleStream();
-        public void GetTweets();
-        public void GetTweetCount();
-        public void SaveTweets();
-
+        public Task<bool> StartSampleStream(Action<object, TweetReceivedEventArgs> TweetsReceivedDelegate, int Retries = 100);
+        public bool PauseSampleStream();
+        public string GetStreamState();
+        public bool StopSampleStream();
+        public Task RestartSampleStream();
     }
 }
